@@ -42,7 +42,7 @@ public function store(Request $request)
     // Afficher un post
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+
     }
 
     // Formulaire de modification

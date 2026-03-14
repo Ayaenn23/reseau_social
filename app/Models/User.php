@@ -22,6 +22,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    
 
     // Un user a plusieurs likes
     public function likes()

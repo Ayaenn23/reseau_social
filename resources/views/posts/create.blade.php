@@ -41,59 +41,55 @@
 <script>
 $('#post-form').on('submit', function(e) {
     e.preventDefault();
-    // e.preventDefault() : empêche le formulaire de se soumettre normalement
-    // on prend le contrôle de la soumission avec AJAX
 
     const form = $(this);
     const btn = form.find('button[type="submit"]');
 
     btn.text('Publication...').prop('disabled', true);
-    // désactive le bouton pendant la requête
-    // évite les doubles soumissions
+
 
     $('#ajax-errors').addClass('d-none').text('');
-    // cache les erreurs précédentes
+
 
     $.ajax({
         url: form.attr('action'),
-        // lit l'action du formulaire : route('posts.store')
+
 
         method: 'POST',
 
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'X-Requested-With': 'XMLHttpRequest'
-            // X-Requested-With : indique à Laravel que c'est une requête AJAX
-            // c'est ce que $request->ajax() vérifie côté serveur
+
+
         },
 
         data: {
             title:   $('#title').val(),
             content: $('#content').val(),
-            // on envoie les valeurs des champs du formulaire
+
         },
 
         success: function(response) {
-            // Le post a été créé avec succès
-            // On redirige vers la liste des posts
+
             window.location.href = "{{ route('posts.index') }}";
-            // L'utilisateur verra le nouveau post en haut de la liste
+
         },
 
         error: function(xhr) {
             btn.text('Publier').prop('disabled', false);
-            // réactive le bouton en cas d'erreur
+
 
             if (xhr.status === 422) {
-                // 422 = erreur de validation Laravel
+
                 const errors = xhr.responseJSON.errors;
                 let errorMsg = '';
                 $.each(errors, function(key, messages) {
                     errorMsg += messages[0] + '<br>';
-                    // affiche chaque message d'erreur
+
                 });
                 $('#ajax-errors').removeClass('d-none').html(errorMsg);
-                // affiche les erreurs dans la zone prévue
+             
             } else {
                 alert('Erreur lors de la publication !');
             }

@@ -13,9 +13,9 @@ public function up(): void
 {
     Schema::create('posts', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->string('title');
-        $table->text('content');
+        $table->foreignId('user_id')->constrained()->onDelete('cascade')->nullable();
+        $table->string('title')->nullable();
+        $table->text('content')->nullable();
         $table->timestamps();
     });
 }

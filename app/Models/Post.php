@@ -24,7 +24,7 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    // Vérifier si l'utilisateur connecté a liké ce post
+
     public function isLikedBy($userId)
     {
         return $this->likes()->where('user_id', $userId)->exists();

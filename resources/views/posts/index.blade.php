@@ -55,9 +55,7 @@
 @section('scripts')
 <script>
 
-// ============================================
-// AJAX LIKE
-// ============================================
+
 $(document).on('click', '.like-btn', function() {
     const btn = $(this);
     const postId = btn.data('post-id');
@@ -82,12 +80,10 @@ $(document).on('click', '.like-btn', function() {
     });
 });
 
-// ============================================
-// AJAX SUPPRIMER
-// ============================================
+
 $(document).on('click', '.delete-btn', function() {
     if (!confirm('Supprimer ce post ?')) return;
-    // si l'utilisateur clique "Annuler" on arrête tout
+
 
     const btn = $(this);
     const postId = btn.data('post-id');
@@ -100,14 +96,12 @@ $(document).on('click', '.delete-btn', function() {
         },
         data: {
             _method: 'DELETE'
-            // Laravel utilise _method pour simuler DELETE
-            // car HTML ne supporte pas DELETE nativement
+
         },
         success: function() {
             $(`#post-${postId}`).fadeOut(400, function() {
                 $(this).remove();
-                // fadeOut(400) : animation de disparition en 400ms
-                // remove() : supprime la card du DOM après l'animation
+            
             });
         },
         error: function() {
